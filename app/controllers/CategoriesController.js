@@ -43,6 +43,25 @@ router.get("/admin/categorias/editar/:id", (req, res) => {
     }
 });
 
+/** Update a category */
+router.post("/admin/categorias/atualizar", (req, res) => {
+    const id = req.body.categoryId;
+    const title = req.body.title;
+
+    if (title || title.trim() !== "") {
+        Category.update({
+            title,
+            slug: slugify(title).toLowerCase()
+        }, {
+            where: {
+                id
+            }
+        }).then(() => res.redirect("/admin/categorias"));
+    }
+
+    else res.redirect(`/admin/categorias/editar/${id}`);
+});
+
 /** Delete a category */
 router.post("/admin/categorias/excluir", (req, res) => {
     const id = req.body.categoryId;
