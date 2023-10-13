@@ -1,0 +1,61 @@
+<%- include("../../partials/header.ejs") %>
+<%- include("../../partials/navbar.ejs") %>
+
+<section class="uk-container">
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-large-bottom">
+        <h1 class="title">Categorias</h1>
+        <a href="/admin/categorias/criar"
+            class="uk-button uk-button-default uk-border-rounded button-blue">
+            Criar Categoria
+        </a>
+    </div>
+
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-striped uk-table-middle uk-margin-remove-top">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach((category, index) => { %>
+                    <tr>
+                        <td class="uk-text-center uk-text-bold"><%= index + 1 %></td>
+                        <td><%= category.title %></td>
+                        <td><%= category.slug %></td>
+                        <td class="uk-flex uk-flex-center">
+                            <a href="/admin/categorias/editar/<%= category.id %>" class="uk-button uk-button-default uk-border-rounded uk-margin-right uk-button-small button-green">
+                                Editar
+                            </a>
+
+                            <form action="/admin/categorias/excluir" method="POST"
+                                onsubmit="handleCategoryDeleteFormSubmit(event, this)">
+                                <input type="hidden" name="categoryId"
+                                    value="<%= category.id %>">
+                                <button type="submit"
+                                    class="uk-button uk-button-default uk-border-rounded uk-button-small button-tomato">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    const handleCategoryDeleteFormSubmit = (event, form) => {
+        event.preventDefault();
+
+        const confirm = window.confirm("Tem certeza que deseja excluir categoria?");
+
+        if (confirm) form.submit();
+    }
+</script>
+
+<%- include("../../partials/footer.ejs") %>

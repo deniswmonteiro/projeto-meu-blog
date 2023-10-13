@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;700&display=swap');
+
+/** Reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: #222;
+    font-family: "Asap", Helvetica, Arial, sans-serif;
+    background-color: #eee;
+    height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    font-family: "Asap", Helvetica, Arial, sans-serif;
+    margin: 0;
+    color: #222;
+}
+
+ul,
+li {
+    font-family: "Asap", Helvetica, Arial, sans-serif;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input {
+    display: block;
+    font-size: 1rem;
+    font-family: "Asap", Helvetica, Arial, sans-serif;
+    color: #222;
+}
+
+label {
+    color: #222 !important; 
+}
+
+a {
+    font-family: "Asap", Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    color: #222;
+}
+
+section.uk-container {
+    padding: 3rem 1rem;
+}
+
+/** Navbar */
+.navbar {
+    background-color: #149 !important;
+}
+
+.navbar .logo {
+    color: #fff;
+}
+
+/** Buttons */
+.button-green {
+    color: #193;
+    border: 1px solid #193;
+    transition: .3s;
+}
+
+.button-green:hover {
+    color: #fff;
+    background-color: #193;
+    border: 1px solid #193;
+    transition: .3s;
+}
+
+.button-blue {
+    color: #37c;
+    border: 1px solid #37c;
+    transition: .3s;
+}
+
+.button-blue:hover {
+    color: #fff;
+    background-color: #37c;
+    border: 1px solid #37c;
+    transition: .3s;
+}
+
+.button-tomato {
+    color: #f42;
+    border: 1px solid #f42;
+    transition: .3s;
+}
+
+.button-tomato:hover {
+    color: #fff;
+    background-color: #f42;
+    border: 1px solid #f42;
+    transition: .3s;
+}
+
+.card .uk-card-header {
+    background-color: #333;
+    border-top-left-radius: .3125rem;
+    border-top-right-radius: .3125rem;
+}
+
+.card .uk-card-header h3 {
+    color: #ccc;
+}
+
+.uk-input {
+    color: #222;
+    border: 1px solid #ccc;
+}
+
+.uk-input:focus {
+    border: 1px solid #555;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.uk-table th {
+    text-align: center;
+    color: #555;
+}
+
+.uk-navbar-nav li a {
+    color: #fff;
+    position: relative;
+    transition: .3s;
+}
+
+.uk-navbar-nav li a:hover {
+    color: #fff;
+}
+
+.uk-navbar-nav li a:hover::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    bottom: 1.75rem;
+}
+
+.uk-navbar-nav li.uk-active a {
+    color: #fff;
+}
+
+.uk-navbar-nav li.uk-active a::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    bottom: 1.75rem;
+}
