@@ -27,7 +27,10 @@ connection.authenticate()
     .catch((error) => console.log(error));
 
 /** Routes */
-app.get("/", (req, res) => res.render("index"));
+app.get("/", (req, res) => {
+    res.render("index", { page: "home" });
+});
+
 app.use("/", CategoriesController);
 app.use("/", ArticlesController);
 

@@ -21,7 +21,10 @@ router.get("/admin/artigos", (req, res) => {
 router.get("/admin/artigos/criar", (req, res) => {
     Category.findAll({ raw: true })
         .then((categories) => {
-            res.render("admin/articles/create", { categories })
+            res.render("admin/articles/create", {
+                page: "articles",
+                categories
+            })
         });
 });
 
@@ -37,6 +40,21 @@ router.post("/admin/artigos/salvar", (req, res) => {
         content,
         categoryId: category
     }).then(() => res.redirect("/admin/artigos"));
+});
+
+/** Delete a article */
+router.post("/admin/artigos/excluir", (req, res) => {
+    const id = req.body.articleId;
+
+    if (id && !isNaN(id)) {
+        Article.destroy({
+            where: {
+                id
+            }
+        }).then(() => res.redirect("/admin/artigos"));
+    }
+
+    else res.redirect("/admin/artigos");
 });
 
 module.exports = router

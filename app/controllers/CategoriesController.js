@@ -15,7 +15,11 @@ router.get("/admin/categorias", (req, res) => {
 });
 
 /** Create a category */
-router.get("/admin/categorias/criar", (req, res) => res.render("admin/categories/create"));
+router.get("/admin/categorias/criar", (req, res) => {
+    res.render("admin/categories/create", {
+        page: "categories"
+    });
+});
 
 /** Store a created category */
 router.post("/admin/categorias/salvar", (req, res) => {
