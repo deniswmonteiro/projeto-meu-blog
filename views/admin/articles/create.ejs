@@ -30,6 +30,19 @@
                             rows="10"></textarea>
                     </div>
                 </div>
+                <div class="uk-margin">
+                    <label for="category" class="uk-form-label">
+                        Categoria
+                    </label>
+                    <select class="uk-select uk-border-rounded" aria-label="Select"
+                        id="category"
+                        name="category">
+                        <option value="" disabled selected>Selecione uma categoria</option>
+                        <% categories.forEach((category) => { %>
+                            <option value="<%= category.id %>"><%= category.title %></option>
+                        <% }) %>
+                    </select>
+                </div>
                 <div class="uk-flex uk-flex-right">
                     <button type="submit" class="uk-button uk-button-default uk-border-rounded button-green">
                         Cadastrar

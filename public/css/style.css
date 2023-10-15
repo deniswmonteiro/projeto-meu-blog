@@ -10,7 +10,6 @@ body {
     color: #222;
     font-family: "Asap", Helvetica, Arial, sans-serif;
     background-color: #eee;
-    height: 100vh;
 }
 
 h1,
@@ -118,13 +117,15 @@ section.uk-container {
 }
 
 .uk-input,
-.uk-textarea {
+.uk-textarea,
+.uk-select {
     color: #222;
     border: 1px solid #ccc;
 }
 
 .uk-input:focus,
-.uk-textarea:focus {
+.uk-textarea:focus,
+.uk-select:focus {
     border: 1px solid #555;
 }
 
