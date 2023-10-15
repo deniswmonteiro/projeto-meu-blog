@@ -117,12 +117,14 @@ section.uk-container {
     color: #ccc;
 }
 
-.uk-input {
+.uk-input,
+.uk-textarea {
     color: #222;
     border: 1px solid #ccc;
 }
 
-.uk-input:focus {
+.uk-input:focus,
+.uk-textarea:focus {
     border: 1px solid #555;
 }
 

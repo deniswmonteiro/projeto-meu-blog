@@ -1,0 +1,70 @@
+<%- include("../../partials/header.ejs") %>
+<%- include("../../partials/navbar.ejs") %>
+
+<section class="uk-container">
+    <div class="uk-card uk-card-default uk-card-small uk-width-2-3@m uk-margin-auto card uk-border-rounded">
+        <div class="uk-card-header">
+            <h3 class="uk-card-title">Criar Artigo</h3>
+        </div>
+        <div class="uk-card-body">
+            <form action="/admin/artigos/salvar" method="POST"
+                class="uk-form-stacked">
+                <div class="uk-margin">
+                    <label for="title" class="uk-form-label">
+                        Título
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="text" class="uk-input uk-border-rounded"
+                            id="title"
+                            name="title">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label for="content" class="uk-form-label">
+                        Conteúdo
+                    </label>
+                    <div class="uk-form-controls">
+                        <textarea type="text" class="uk-textarea uk-border-rounded"
+                            id="content"
+                            name="content"
+                            rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="uk-flex uk-flex-right">
+                    <button type="submit" class="uk-button uk-button-default uk-border-rounded button-green">
+                        Cadastrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: "#content",
+        promotion: false,
+        language: "pt_BR",
+        plugins: [
+            "advlist",
+            "autolink",
+            "emoticons",
+            "fullscreen",
+            "image",
+            "insertdatetime",
+            "link",
+            "lists",
+            "media",
+            "paste",
+            "preview",
+            "print",
+            "save",
+            "searchreplace",
+            "table",
+            "wordcount",
+        ]
+    });
+</script>
+
+<%- include("../../partials/footer.ejs") %>
