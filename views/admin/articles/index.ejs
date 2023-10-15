@@ -3,10 +3,10 @@
 
 <section class="uk-container">
     <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-large-bottom">
-        <h1 class="title">Categorias</h1>
-        <a href="/admin/categorias/criar"
+        <h1 class="title">Artigos</h1>
+        <a href="/admin/artigos/criar"
             class="uk-button uk-button-default uk-border-rounded button-blue">
-            Criar Categoria
+            Criar Artigo
         </a>
     </div>
 
@@ -17,24 +17,26 @@
                     <th>#</th>
                     <th>Título</th>
                     <th>Slug</th>
+                    <th>Categoria</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <% categories.forEach((category, index) => { %>
+                <% articles.forEach((article, index) => { %>
                     <tr>
                         <td class="uk-text-center uk-text-bold"><%= index + 1 %></td>
-                        <td><%= category.title %></td>
-                        <td><%= category.slug %></td>
+                        <td><%= article.title %></td>
+                        <td><%= article.slug %></td>
+                        <td><%= article['category.title'] %></td>
                         <td class="uk-flex uk-flex-center">
-                            <a href="/admin/categorias/editar/<%= category.id %>" class="uk-button uk-button-default uk-border-rounded uk-margin-right uk-button-small button-green">
+                            <a href="/admin/artigos/editar/<%= article.id %>" class="uk-button uk-button-default uk-border-rounded uk-margin-right uk-button-small button-green">
                                 Editar
                             </a>
 
-                            <form action="/admin/categorias/excluir" method="POST"
-                                onsubmit="handleCategoryDeleteFormSubmit(event, this)">
-                                <input type="hidden" name="categoryId"
-                                    value="<%= category.id %>">
+                            <form action="/admin/artigos/excluir" method="POST"
+                                onsubmit="handleArticleDeleteFormSubmit(event, this)">
+                                <input type="hidden" name="articleId"
+                                    value="<%= article.id %>">
                                 <button type="submit"
                                     class="uk-button uk-button-default uk-border-rounded uk-button-small button-tomato">
                                     Excluir
@@ -49,10 +51,10 @@
 </section>
 
 <script>
-    const handleCategoryDeleteFormSubmit = (event, form) => {
+    const handleArticleDeleteFormSubmit = (event, form) => {
         event.preventDefault();
 
-        const confirm = window.confirm("Tem certeza que deseja excluir a categoria?");
+        const confirm = window.confirm("Tem certeza que deseja excluir o artigo?");
 
         if (confirm) form.submit();
     }

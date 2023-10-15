@@ -5,9 +5,13 @@ const Category = require("../models/Category");
 
 /** Categories list */
 router.get("/admin/categorias", (req, res) => {
-    Category.findAll().then((categories) => {
-        res.render("admin/categories/index", { categories });
-    });
+    Category.findAll({ raw: true })
+        .then((categories) => {
+            res.render("admin/categories/index", {
+                page: "categories",
+                categories
+            });
+        });
 });
 
 /** Create a category */

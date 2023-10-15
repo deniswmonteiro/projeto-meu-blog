@@ -8,8 +8,11 @@
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
-                    <li>
+                    <li class="<%= page === 'categories' ? 'uk-active' : '' %>">
                         <a href="/admin/categorias/">Categorias</a>
+                    </li>
+                    <li class="<%= page === 'articles' ? 'uk-active' : '' %>">
+                        <a href="/admin/artigos/">Artigos</a>
                     </li>
                 </ul>
             </div>
