@@ -2,7 +2,30 @@
 <%- include("partials/navbar.ejs") %>
 
 <section class="uk-container">
+    <h2 class="uk-width-2-3@m uk-margin-auto uk-margin-medium-bottom">
+        Artigos Recentes
+        <hr class="uk-divider-small uk-margin-small-top">
+    </h2>
     
+
+    <% articles.forEach((article) => { %>
+        <div class="uk-card uk-card-default uk-card-small uk-width-2-3@m uk-margin-auto card uk-border-rounded uk-margin-medium-bottom">
+            <div class="uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h5 class="uk-card-title"><%= article.title %></h5>
+                <a href="#"
+                    class="uk-button uk-button-default uk-button-small uk-border-rounded button-tomato">
+                    Ler artigo
+                </a>
+            </div>
+            <div class="uk-card-body">
+                <p>
+                    Criado em <span>
+                    <%= (new Date(article.createdAt).toLocaleString("pt-BR")).replace(",", " às ") %>
+                    </span>
+                </p>
+            </div>
+        </div>
+    <% }) %>
 </section>
 
 <%- include("partials/footer.ejs") %>

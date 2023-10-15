@@ -7,14 +7,20 @@
                 </a>
             </div>
             <div class="uk-navbar-right">
-                <ul class="uk-navbar-nav">
-                    <li class="<%= page === 'categories' ? 'uk-active' : '' %>">
-                        <a href="/admin/categorias/">Categorias</a>
-                    </li>
-                    <li class="<%= page === 'articles' ? 'uk-active' : '' %>">
-                        <a href="/admin/artigos/">Artigos</a>
-                    </li>
-                </ul>
+                <% if (page === "home") { %>
+                    <!-- <ul class="uk-navbar-nav">
+
+                    </ul> -->
+                <% } else { %>
+                    <ul class="uk-navbar-nav">
+                        <li class="<%= page === 'categories' ? 'uk-active' : '' %>">
+                            <a href="/admin/categorias/">Categorias</a>
+                        </li>
+                        <li class="<%= page === 'articles' ? 'uk-active' : '' %>">
+                            <a href="/admin/artigos/">Artigos</a>
+                        </li>
+                    </ul>
+                <% } %>
             </div>
         </div>
     </div>

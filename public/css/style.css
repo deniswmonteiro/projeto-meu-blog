@@ -113,8 +113,10 @@ section.uk-container {
     border-top-right-radius: .3125rem;
 }
 
-.card .uk-card-header h3 {
+.card .uk-card-header h3,
+.card .uk-card-header h5 {
     color: #ccc;
+    margin-bottom: 0;
 }
 
 .uk-input,
@@ -171,4 +173,8 @@ section.uk-container {
     background-color: #fff;
     position: absolute;
     bottom: 1.75rem;
+}
+
+.uk-divider-small::after {
+    border-top: 2px solid #f42;
 }

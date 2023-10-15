@@ -28,7 +28,13 @@ connection.authenticate()
 
 /** Routes */
 app.get("/", (req, res) => {
-    res.render("index", { page: "home" });
+    Article.findAll({ raw: true })
+        .then((articles) => {
+            res.render("index", {
+                page: "home",
+                articles
+            });
+        });
 });
 
 app.use("/", CategoriesController);
