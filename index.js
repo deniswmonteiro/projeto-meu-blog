@@ -28,13 +28,36 @@ connection.authenticate()
 
 /** Routes */
 app.get("/", (req, res) => {
-    Article.findAll({ raw: true })
+    Article.findAll({
+            raw: true,
+            order: [
+                [ "id", "desc" ]
+            ]
+        })
         .then((articles) => {
             res.render("index", {
                 page: "home",
                 articles
             });
         });
+});
+
+app.get("/:slug", (req, res) => {
+    const slug = req.params.slug;
+
+    Article.findOne({
+        where: {
+            slug
+        }
+    }).then((article) => {
+        if (article) res.render("article", {
+            page: "article",
+            article
+        });
+        else res.redirect("/");
+    }).catch((error) => {
+        res.redirect("/");
+    });
 });
 
 app.use("/", CategoriesController);

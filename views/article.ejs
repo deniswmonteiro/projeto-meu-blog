@@ -1,0 +1,15 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/navbar.ejs") %>
+
+<section class="uk-container">    
+    <div class="uk-card uk-card-default uk-card-small uk-width-2-3@m uk-margin-auto card uk-border-rounded uk-margin-medium-bottom">
+        <div class="uk-card-header">
+            <h5 class="uk-card-title"><%= article.title %></h5>
+        </div>
+        <div class="uk-card-body">
+            <%- article.content %>
+        </div>
+    </div>
+</section>
+
+<%- include("partials/footer.ejs") %>
