@@ -178,3 +178,19 @@ section.uk-container {
 .uk-divider-small::after {
     border-top: 2px solid #f42;
 }
+
+.dropdown-trigger a {
+    color: #fff;
+}
+
+.uk-dropdown-nav li:not(:last-child) {
+    margin-bottom: .5rem;
+}
+
+.uk-dropdown-nav li a:hover {
+    color: #f42;
+}
+
+.uk-dropdown-nav li.uk-active a {
+    color: #f42;
+}

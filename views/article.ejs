@@ -1,15 +1,20 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/navbar.ejs") %>
 
-<section class="uk-container">    
-    <div class="uk-card uk-card-default uk-card-small uk-width-2-3@m uk-margin-auto card uk-border-rounded uk-margin-medium-bottom">
-        <div class="uk-card-header">
-            <h5 class="uk-card-title"><%= article.title %></h5>
-        </div>
-        <div class="uk-card-body">
+<section class="uk-container">
+    <article class="uk-article uk-width-2-3@m uk-margin-auto">
+        <h1 class="uk-article-title uk-margin-small-bottom">
+            <%= article.title %>
+        </h1>
+    
+        <p class="uk-article-meta uk-margin-medium-bottom">
+            Criado em <span><%= (new Date(article.createdAt).toLocaleString("pt-BR").replace(",", " às ")) %></span>
+        </p>
+    
+        <div>
             <%- article.content %>
         </div>
-    </div>
+    </article>
 </section>
 
 <%- include("partials/footer.ejs") %>

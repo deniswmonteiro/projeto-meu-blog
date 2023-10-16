@@ -27,6 +27,7 @@ connection.authenticate()
     .catch((error) => console.log(error));
 
 /** Routes */
+// Home page
 app.get("/", (req, res) => {
     Article.findAll({
             raw: true,
@@ -35,13 +36,18 @@ app.get("/", (req, res) => {
             ]
         })
         .then((articles) => {
-            res.render("index", {
-                page: "home",
-                articles
+            Category.findAll({ raw: true }).then((categories) => {
+                res.render("index", {
+                    role: "user",
+                    page: "home",
+                    articles,
+                    categories
+                });
             });
         });
 });
 
+// Article page
 app.get("/:slug", (req, res) => {
     const slug = req.params.slug;
 
@@ -50,10 +56,47 @@ app.get("/:slug", (req, res) => {
             slug
         }
     }).then((article) => {
-        if (article) res.render("article", {
-            page: "article",
-            article
-        });
+        if (article) {
+            Category.findAll({ raw: true }).then((categories) => {
+                res.render("article", {
+                    role: "user",
+                    page: "article",
+                    article,
+                    categories
+                });
+            });
+        }
+
+        else res.redirect("/");
+    }).catch((error) => {
+        res.redirect("/");
+    });
+});
+
+// Category page
+app.get("/categorias/:slug", (req, res) => {
+    const slug = req.params.slug;
+
+    Category.findOne({
+        where: {
+            slug
+        },
+        include: [{
+            model: Article
+        }]
+    }).then((category) => {
+        if (category) {
+            Category.findAll({ raw: true }).then((categories) => {
+                res.render("category", {
+                    role: "user",
+                    page: slug,
+                    articles: category["articles"],
+                    categories,
+                    category
+                });
+            });
+        }
+
         else res.redirect("/");
     }).catch((error) => {
         res.redirect("/");

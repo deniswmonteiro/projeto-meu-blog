@@ -8,6 +8,7 @@ router.get("/admin/categorias", (req, res) => {
     Category.findAll({ raw: true })
         .then((categories) => {
             res.render("admin/categories/index", {
+                role: "admin",
                 page: "categories",
                 categories
             });
@@ -17,6 +18,7 @@ router.get("/admin/categorias", (req, res) => {
 /** Create a category */
 router.get("/admin/categorias/criar", (req, res) => {
     res.render("admin/categories/create", {
+        role: "admin",
         page: "categories"
     });
 });

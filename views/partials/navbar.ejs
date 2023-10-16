@@ -7,10 +7,24 @@
                 </a>
             </div>
             <div class="uk-navbar-right">
-                <% if (page === "home") { %>
-                    <!-- <ul class="uk-navbar-nav">
+                <% if (role === "user") { %>
+                    <li class="dropdown-trigger">
+                        <a href="#" class="uk-text-uppercase">
+                            Categorias
+                        </a>
+                    </li>
 
-                    </ul> -->
+                    <div uk-dropdown="pos: top-right">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <% categories.forEach((category) => { %>
+                                <li class="<%= page === category.slug ? 'uk-active' : '' %>">
+                                    <a href="/categorias/<%= category.slug %>">
+                                        <%= category.title %>
+                                    </a>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
                 <% } else { %>
                     <ul class="uk-navbar-nav">
                         <li class="<%= page === 'categories' ? 'uk-active' : '' %>">

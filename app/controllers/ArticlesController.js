@@ -8,9 +8,15 @@ const Category = require("../models/Category");
 router.get("/admin/artigos", (req, res) => {
     Article.findAll({
         raw: true,
-        include: [{ model: Category }]
+        include: [{ 
+            model: Category
+        }],
+        order: [
+            [ "id", "desc" ]
+        ]
     }).then((articles) => {
         res.render("admin/articles/index", {
+            role: "admin",
             page: "articles",
             articles
         })
@@ -22,6 +28,7 @@ router.get("/admin/artigos/criar", (req, res) => {
     Category.findAll({ raw: true })
         .then((categories) => {
             res.render("admin/articles/create", {
+                role: "admin",
                 page: "articles",
                 categories
             })
