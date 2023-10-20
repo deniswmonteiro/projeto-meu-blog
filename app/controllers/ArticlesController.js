@@ -41,12 +41,70 @@ router.post("/admin/artigos/salvar", (req, res) => {
     const content = req.body.content;
     const category = req.body.category;
 
-    Article.create({
-        title,
-        slug: slugify(title).toLowerCase(),
-        content,
-        categoryId: category
-    }).then(() => res.redirect("/admin/artigos"));
+    if (title && title.trim() !== "" && content && content.trim() !== "" && category && category.value !== 0) {
+        Article.create({
+            title,
+            slug: slugify(title).toLowerCase(),
+            content,
+            categoryId: category
+        })
+        .then(() => res.redirect("/admin/artigos"))
+        .catch((error) => res.redirect("/"));
+    }
+
+    else res.redirect("/admin/artigos");
+});
+
+/** Edit a article */
+router.get("/admin/artigos/editar/:id", (req, res) => {
+    const id = req.params.id;
+
+    if (id && !isNaN(id)) {
+        Article.findOne({
+            where: {
+                id
+            },
+            include: [{ 
+                model: Category
+            }],
+        }).then((article) => {
+            Category.findAll({ raw: true }).then((categories) => {
+                res.render("admin/articles/edit", {
+                    role: "admin",
+                    page: "article",
+                    article,
+                    categories
+                });
+            });
+        });
+    }
+
+    else res.redirect("/admin/artigos");
+});
+
+/** Update a article */
+router.post("/admin/artigos/atualizar", (req, res) => {
+    const id = req.body.articleId;
+    const title = req.body.title;
+    const content = req.body.content;
+    const category = req.body.category;
+
+    if (title && title.trim() !== "" && content && content.trim() !== "" && category && category.value !== 0) {
+        Article.update({
+            title,
+            slug: slugify(title).toLowerCase(),
+            content,
+            categoryId: category
+        }, {
+            where: {
+                id
+            }
+        })
+        .then(() => res.redirect("/admin/artigos"))
+        .catch((error) => res.redirect("/"));
+    }
+
+    else res.redirect("/")
 });
 
 /** Delete a article */

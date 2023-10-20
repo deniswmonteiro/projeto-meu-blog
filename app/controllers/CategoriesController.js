@@ -58,7 +58,7 @@ router.post("/admin/categorias/atualizar", (req, res) => {
     const id = req.body.categoryId;
     const title = req.body.title;
 
-    if (title || title.trim() !== "") {
+    if (title && title.trim() !== "") {
         Category.update({
             title,
             slug: slugify(title).toLowerCase()

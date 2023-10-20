@@ -187,6 +187,11 @@ section.uk-container {
     margin-bottom: .5rem;
 }
 
+.uk-dropdown-nav li a {
+    color: #222;
+    font-size: 1rem;
+}
+
 .uk-dropdown-nav li a:hover {
     color: #f42;
 }
