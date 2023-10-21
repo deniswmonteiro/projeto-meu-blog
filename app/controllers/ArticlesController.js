@@ -122,4 +122,6 @@ router.post("/admin/artigos/excluir", (req, res) => {
     else res.redirect("/admin/artigos");
 });
 
+Article.sync({ force: false });
+
 module.exports = router

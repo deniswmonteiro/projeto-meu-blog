@@ -23,7 +23,7 @@ router.get("/admin/categorias/criar", (req, res) => {
     });
 });
 
-/** Store a created category */
+/** Store a category */
 router.post("/admin/categorias/salvar", (req, res) => {
     const title = req.body.title;
 
@@ -87,5 +87,6 @@ router.post("/admin/categorias/excluir", (req, res) => {
     else res.redirect("/admin/categorias");
 });
 
+Category.sync({ force: false });
 
 module.exports = router

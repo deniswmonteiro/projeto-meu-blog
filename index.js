@@ -6,10 +6,12 @@ const connection = require("./database/connection");
 /** Controllers */
 const CategoriesController = require("./app/controllers/CategoriesController");
 const ArticlesController = require("./app/controllers/ArticlesController");
+const UsersController = require("./app/controllers/UsersController");
 
 /** Models */
 const Article = require("./app/models/Article");
 const Category = require("./app/models/Category");
+const User = require("./app/models/User");
 
 /** View engine */
 app.set("view engine", "ejs");
@@ -152,5 +154,6 @@ app.get("/categorias/:slug", (req, res) => {
 
 app.use("/", CategoriesController);
 app.use("/", ArticlesController);
+app.use("/", UsersController);
 
 app.listen(3000, () => console.log("Servidor em execução."));
