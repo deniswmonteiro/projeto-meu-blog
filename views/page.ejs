@@ -4,11 +4,11 @@
 <section class="uk-container uk-width-2-3@m uk-margin-auto">
     <div class="uk-margin-large-bottom">
         <h2 class="uk-margin-medium-bottom">
-            Artigos Recentes
+            Todos os Artigos
             <hr class="uk-divider-small uk-margin-small-top">
         </h2>
         
-        <% articles.forEach((article) => { %>
+        <% result.articles.rows.forEach((article) => { %>
             <div class="uk-card uk-card-default uk-card-small card uk-border-rounded uk-margin-medium-bottom">
                 <div class="uk-card-header uk-flex uk-flex-between uk-flex-middle">
                     <h5 class="uk-card-title"><%= article.title %></h5>
@@ -26,11 +26,31 @@
         <% }) %>
     </div>
 
-    <div class="uk-flex uk-flex-right link-all-articles">
-        <a href="/artigos/1" class="uk-button uk-button-text">
-            Ver todos os artigos <span uk-icon="icon: arrow-right"></span>
-        </a>
-    </div>
+    <ul class="uk-pagination uk-flex-right" uk-margin>
+        <li <% if (result.page < 2) { %> class="uk-disabled" <% } %>>
+            <a href="/artigos/<%= result.page - 1 %>">
+                <span uk-pagination-previous></span>
+            </a>
+        </li>
+
+        <% for (let i = 1; i <= result.totalPages; i++) { %>
+            <% if (result.page === i) { %>
+                <li class="uk-active">
+                    <span><%= i %></span>
+                </li> 
+            <% } else { %>
+                <li>
+                    <a href="/artigos/<%= i %>"><%= i %></a>
+                </li>
+            <% } %>
+        <% } %>
+        
+        <li <% if (!result.next) { %> class="uk-disabled" <% } %>>
+            <a href="/artigos/<%= result.page + 1 %>">
+                <span uk-pagination-next></span>
+            </a>
+        </li>
+    </ul>
 </section>
 
 <%- include("partials/footer.ejs") %>

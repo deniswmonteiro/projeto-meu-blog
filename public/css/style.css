@@ -151,12 +151,7 @@ section.uk-container {
     color: #fff;
 }
 
-.uk-navbar-nav li a:hover::after {
-    content: "";
-    width: 100%;
-    height: 1px;
-    display: block;
-    background-color: #fff;
+.uk-navbar-nav a.uk-button-text::before {
     position: absolute;
     bottom: 1.75rem;
 }
@@ -183,6 +178,10 @@ section.uk-container {
     color: #fff;
 }
 
+.dropdown-trigger a:hover {
+    text-decoration: none;
+}
+
 .uk-dropdown-nav li:not(:last-child) {
     margin-bottom: .5rem;
 }
@@ -197,5 +196,23 @@ section.uk-container {
 }
 
 .uk-dropdown-nav li.uk-active a {
+    color: #f42;
+}
+
+.link-all-articles a {
+    font-size: 1rem;
+    color: #f42;
+}
+
+.link-all-articles a:hover {
+    color: #f42;
+}
+
+.uk-pagination > * > * {
+    color: #222;
+}
+
+.uk-pagination > * > :hover,
+.uk-pagination > .uk-active > * {
     color: #f42;
 }

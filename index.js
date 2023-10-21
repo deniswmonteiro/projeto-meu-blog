@@ -33,7 +33,8 @@ app.get("/", (req, res) => {
             raw: true,
             order: [
                 [ "id", "desc" ]
-            ]
+            ],
+            limit: 5
         })
         .then((articles) => {
             Category.findAll({ raw: true }).then((categories) => {
@@ -45,6 +46,52 @@ app.get("/", (req, res) => {
                 });
             });
         });
+});
+
+/** Articles pagination */
+app.get("/artigos/:id", (req, res) => {
+    const page = Number(req.params.id);
+
+    if (page === 0) res.redirect("/");
+    
+    else {
+        let limit = 5;
+        let offset = 0;
+
+        if (isNaN(page) || page === 1) offset = 0;
+        else offset = (page - 1) * limit;
+
+        Article.findAndCountAll({
+            order: [
+                ["id", "desc"]
+            ],
+            limit,
+            offset
+        }).then((articles) => {
+            const hasNextPage = (offset + limit) <= articles.count ? true : false;
+            const totalPages = Math.round(articles.count / limit);
+
+            const result = {
+                page,
+                totalPages,
+                articles,
+                next: hasNextPage
+            }
+
+            if (page > totalPages) res.redirect("/artigos/1");
+
+            else {
+                Category.findAll({ raw: true }).then((categories) => {
+                    res.render("page", {
+                        role: "user",
+                        page: "article",
+                        result,
+                        categories
+                    });
+                });
+            }
+        });
+    }
 });
 
 // Article page
