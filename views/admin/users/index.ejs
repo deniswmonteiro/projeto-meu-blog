@@ -1,0 +1,61 @@
+<%- include("../../partials/header.ejs") %>
+<%- include("../../partials/navbar.ejs") %>
+
+<section class="uk-container">
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-large-bottom">
+        <h1 class="title">Gerenciamento de Usuários</h1>
+        <a href="/admin/usuarios/criar"
+            class="uk-button uk-button-default uk-border-rounded button-blue">
+            Adicionar Usuário
+        </a>
+    </div>
+
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-striped uk-table-middle uk-margin-remove-top">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach((user, index) => { %>
+                    <tr>
+                        <td class="uk-text-center uk-text-bold"><%= index + 1 %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.email %></td>
+                        <td class="uk-flex uk-flex-center">
+                            <a href="/admin/usuarios/editar/<%= user.id %>" class="uk-button uk-button-default uk-border-rounded uk-margin-right uk-button-small button-green">
+                                Editar
+                            </a>
+
+                            <form action="/admin/usuarios/excluir" method="POST"
+                                onsubmit="handleUserDeleteFormSubmit(event, this)">
+                                <input type="hidden" name="categoryId"
+                                    value="<%= user.id %>">
+                                <button type="submit"
+                                    class="uk-button uk-button-default uk-border-rounded uk-button-small button-tomato">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    const handleUserDeleteFormSubmit = (event, form) => {
+        event.preventDefault();
+
+        const confirm = window.confirm("Tem certeza que deseja excluir o usuário?");
+
+        if (confirm) form.submit();
+    }
+</script>
+
+<%- include("../../partials/footer.ejs") %>

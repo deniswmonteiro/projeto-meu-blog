@@ -3,15 +3,23 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const User = require("../models/User");
 
+/** Users list */
 router.get("/admin/usuarios", (req, res) => {
-    res.send("Usuários");
+    User.findAll({ raw: true })
+        .then((users) => {
+            res.render("admin/users/index", {
+                role: "admin",
+                page: "users",
+                users
+            });
+        });
 });
 
 /** Create a user */
 router.get("/admin/usuarios/criar", (req, res) => {
     res.render("admin/users/create", {
         role: "admin",
-        page: "user"
+        page: "users"
     });
 });
 
@@ -35,7 +43,7 @@ router.post("/admin/usuarios/salvar", (req, res) => {
                     email,
                     password: bcryptjs.hashSync(password, salt)
                 })
-                .then(() => res.redirect("/"))
+                .then(() => res.redirect("/admin/usuarios"))
                 .catch((error) => res.redirect("/"));
             }
 

@@ -71,7 +71,7 @@ router.get("/admin/artigos/editar/:id", (req, res) => {
             Category.findAll({ raw: true }).then((categories) => {
                 res.render("admin/articles/edit", {
                     role: "admin",
-                    page: "article",
+                    page: "articles",
                     article,
                     categories
                 });
