@@ -54,6 +54,21 @@ router.post("/admin/usuarios/salvar", (req, res) => {
     else res.redirect("/admin/usuarios/criar");
 });
 
+/** Delete a category */
+router.post("/admin/usuarios/excluir", (req, res) => {
+    const id = req.body.userId;
+
+    if (id && !isNaN(id)) {
+        User.destroy({
+            where: {
+                id
+            }
+        }).then(() => res.redirect("/admin/usuarios"));
+    }
+
+    else res.redirect("/admin/usuarios");
+});
+
 User.sync({ force: false });
 
 module.exports = router
