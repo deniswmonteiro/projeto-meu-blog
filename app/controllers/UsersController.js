@@ -23,7 +23,7 @@ router.get("/admin/usuarios/criar", (req, res) => {
     });
 });
 
-/** Store a category */
+/** Store a user */
 router.post("/admin/usuarios/salvar", (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
@@ -54,7 +54,70 @@ router.post("/admin/usuarios/salvar", (req, res) => {
     else res.redirect("/admin/usuarios/criar");
 });
 
-/** Delete a category */
+/** Edit a user */
+router.get("/admin/usuarios/editar/:id", (req, res) => {
+    const id = req.params.id;
+
+    if (isNaN(id)) res.redirect("/admin/usuarios");
+    
+    else {
+        User.findOne({
+            where: {
+                id
+            }
+        }).then((user) => {
+            res.render("admin/users/edit", {
+                role: "admin",
+                page: "users",
+                user
+            });
+        }).catch((error) => res.redirect("/admin/usuarios"));
+    }
+});
+
+/** Update a user */
+router.post("/admin/usuarios/atualizar", (req, res) => {
+    const id = req.body["user-id"];
+    const name = req.body.name;
+    const email = req.body.email;
+    const changePassword = req.body["change-password"];
+    const password = changePassword ? req.body.password : null;
+
+    if (changePassword === "on" && password.trim() === "") res.redirect(`/admin/usuarios/editar/${id}`);
+
+    else {
+        if (name && name.trim() !== "" && email && email.trim() !== "") {
+            if (password === null) {
+                User.update({
+                    name,
+                    email
+                }, {
+                    where: {
+                        id
+                    }
+                }).then(() => res.redirect("/admin/usuarios"));
+            }
+
+            else {
+                const salt = bcryptjs.genSaltSync(6);
+
+                User.update({
+                    name,
+                    email,
+                    password: bcryptjs.hashSync(password, salt)
+                }, {
+                    where: {
+                        id
+                    }
+                }).then(() => res.redirect("/admin/usuarios"));
+            }
+        }
+
+        else res.redirect(`/admin/usuarios/editar/${id}`);
+    }
+});
+
+/** Delete a user */
 router.post("/admin/usuarios/excluir", (req, res) => {
     const id = req.body.userId;
 

@@ -1,0 +1,76 @@
+<%- include("../../partials/header.ejs") %>
+<%- include("../../partials/navbar.ejs") %>
+
+<section class="uk-container">
+    <div class="uk-card uk-card-default uk-card-small uk-width-2-3@m uk-margin-auto card uk-border-rounded">
+        <div class="uk-card-header">
+            <h3 class="uk-card-title">Editar Usuário</h3>
+        </div>
+        <div class="uk-card-body">
+            <form action="/admin/usuarios/atualizar" method="POST"
+                class="uk-form-stacked">
+                <input type="hidden" name="user-id" value="<%= user.id %>">
+                <div class="uk-margin">
+                    <label for="name" class="uk-form-label">
+                        Nome
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="text" class="uk-input uk-border-rounded"
+                            id="name"
+                            name="name"
+                            value="<%= user.name %>">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label for="email" class="uk-form-label">
+                        Email
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="email" class="uk-input uk-border-rounded"
+                            id="email"
+                            name="email"
+                            value="<%= user.email %>">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-form-controls uk-margin-small-bottom">
+                        <label for="change-password">
+                            <input type="checkbox" class="uk-checkbox uk-border-rounded"
+                                id="change-password"
+                                name="change-password"
+                                onclick="chkChangePassword(this)">
+                                Alterar senha?
+                        </label>
+                    </div>
+
+                    <label for="password" class="uk-form-label">
+                        Senha
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="password" class="uk-input uk-border-rounded"
+                            id="password"
+                            name="password"
+                            disabled>
+                    </div>
+                </div>
+                <div class="uk-flex uk-flex-right">
+                    <button type="submit" class="uk-button uk-button-default uk-border-rounded button-green">
+                        Atualizar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    const chkChangePassword = (field) => {
+        const password = document.querySelector("#password");
+
+        field.checked ?
+            password.removeAttribute("disabled") :
+            password.setAttribute("disabled", true);
+    }
+</script>
+
+<%- include("../../partials/footer.ejs") %>

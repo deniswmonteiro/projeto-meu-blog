@@ -121,15 +121,21 @@ section.uk-container {
 
 .uk-input,
 .uk-textarea,
-.uk-select {
+.uk-select,
+.uk-checkbox {
     color: #222;
     border: 1px solid #ccc;
 }
 
 .uk-input:focus,
 .uk-textarea:focus,
-.uk-select:focus {
+.uk-select:focus,
+.uk-checkbox:focus {
     border: 1px solid #555;
+}
+
+.uk-checkbox:checked {
+    background-color: #f42 !important;
 }
 
 .title {
