@@ -1,0 +1,42 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/navbar.ejs") %>
+
+<section class="uk-container">
+    <div class="uk-card uk-card-default uk-card-small uk-width-2-3@m uk-margin-auto card uk-border-rounded">
+        <div class="uk-card-header">
+            <h3 class="uk-card-title">Fazer Login</h3>
+        </div>
+        <div class="uk-card-body">
+            <form action="/login" method="POST"
+                class="uk-form-stacked">
+                <div class="uk-margin">
+                    <label for="email" class="uk-form-label">
+                        Email
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="email" class="uk-input uk-border-rounded"
+                            id="email"
+                            name="email">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label for="password" class="uk-form-label">
+                        Senha
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="password" class="uk-input uk-border-rounded"
+                            id="password"
+                            name="password">
+                    </div>
+                </div>
+                <div class="uk-flex uk-flex-right">
+                    <button type="submit" class="uk-button uk-button-default uk-border-rounded button-green">
+                        Entrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<%- include("partials/footer.ejs") %>

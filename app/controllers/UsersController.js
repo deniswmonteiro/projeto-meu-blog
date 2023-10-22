@@ -1,10 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const bcryptjs = require("bcryptjs");
+
+/** Middlewares */
+const adminAuth = require("../../middlewares/adminAuth");
+
+/** Models */
 const User = require("../models/User");
 
 /** Users list */
-router.get("/admin/usuarios", (req, res) => {
+router.get("/admin/usuarios", adminAuth, (req, res) => {
     User.findAll({ raw: true })
         .then((users) => {
             res.render("admin/users/index", {
@@ -16,7 +21,7 @@ router.get("/admin/usuarios", (req, res) => {
 });
 
 /** Create a user */
-router.get("/admin/usuarios/criar", (req, res) => {
+router.get("/admin/usuarios/criar", adminAuth, (req, res) => {
     res.render("admin/users/create", {
         role: "admin",
         page: "users"
@@ -24,7 +29,7 @@ router.get("/admin/usuarios/criar", (req, res) => {
 });
 
 /** Store a user */
-router.post("/admin/usuarios/salvar", (req, res) => {
+router.post("/admin/usuarios/salvar", adminAuth, (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
@@ -55,7 +60,7 @@ router.post("/admin/usuarios/salvar", (req, res) => {
 });
 
 /** Edit a user */
-router.get("/admin/usuarios/editar/:id", (req, res) => {
+router.get("/admin/usuarios/editar/:id", adminAuth, (req, res) => {
     const id = req.params.id;
 
     if (isNaN(id)) res.redirect("/admin/usuarios");
@@ -76,7 +81,7 @@ router.get("/admin/usuarios/editar/:id", (req, res) => {
 });
 
 /** Update a user */
-router.post("/admin/usuarios/atualizar", (req, res) => {
+router.post("/admin/usuarios/atualizar", adminAuth, (req, res) => {
     const id = req.body["user-id"];
     const name = req.body.name;
     const email = req.body.email;
@@ -118,7 +123,7 @@ router.post("/admin/usuarios/atualizar", (req, res) => {
 });
 
 /** Delete a user */
-router.post("/admin/usuarios/excluir", (req, res) => {
+router.post("/admin/usuarios/excluir", adminAuth, (req, res) => {
     const id = req.body.userId;
 
     if (id && !isNaN(id)) {

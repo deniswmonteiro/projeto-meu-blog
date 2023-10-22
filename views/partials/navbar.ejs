@@ -1,45 +1,60 @@
 <nav class="uk-navbar-container navbar">
     <div class="uk-container">
-        <div uk-navbar>
-            <div class="uk-navbar-left">
-                <a href="/" class="uk-navbar-item uk-logo logo">
-                    Meu Blog
-                </a>
+        <% if (page === "login") { %>
+            <div uk-navbar>
+                <div class="uk-navbar-center">
+                    <a href="/" class="uk-navbar-item uk-logo logo">
+                        Meu Blog
+                    </a>
+                </div>
             </div>
-            <div class="uk-navbar-right">
-                <% if (role === "user") { %>
-                    <li class="dropdown-trigger">
-                        <a href="#" class="uk-text-uppercase">
-                            Categorias
-                        </a>
-                    </li>
-
-                    <div uk-dropdown="pos: top-right">
-                        <ul class="uk-nav uk-dropdown-nav">
-                            <% categories.forEach((category) => { %>
-                                <li class="<%= page === category.slug ? 'uk-active' : '' %>">
-                                    <a href="/categorias/<%= category.slug %>">
-                                        <%= category.title %>
-                                    </a>
-                                </li>
-                            <% }) %>
-                        </ul>
-                    </div>
-                <% } else { %>
-                    <ul class="uk-navbar-nav">
-                        <li class="<%= page === 'categories' ? 'uk-active' : '' %>">
-                            <a href="/admin/categorias/" class="uk-button uk-button-text">
+        <% } else { %>
+            <div uk-navbar>
+                <div class="uk-navbar-left">
+                    <a href="/" class="uk-navbar-item uk-logo logo">
+                        Meu Blog
+                    </a>
+                </div>
+                <div class="uk-navbar-right">
+                    <% if (role === "user") { %>
+                        <li class="dropdown-trigger">
+                            <a href="#" class="uk-text-uppercase">
                                 Categorias
                             </a>
                         </li>
-                        <li class="<%= page === 'articles' ? 'uk-active' : '' %>">
-                            <a href="/admin/artigos/" class="uk-button uk-button-text">
-                                Artigos
-                            </a>
-                        </li>
-                    </ul>
-                <% } %>
+    
+                        <div uk-dropdown="pos: top-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <% categories.forEach((category) => { %>
+                                    <li class="<%= page === category.slug ? 'uk-active' : '' %>">
+                                        <a href="/categorias/<%= category.slug %>">
+                                            <%= category.title %>
+                                        </a>
+                                    </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    <% } else { %>
+                        <ul class="uk-navbar-nav">
+                            <li class="<%= page === 'users' ? 'uk-active' : '' %>">
+                                <a href="/admin/usuarios/" class="uk-button uk-button-text">
+                                    Usuários
+                                </a>
+                            </li>
+                            <li class="<%= page === 'categories' ? 'uk-active' : '' %>">
+                                <a href="/admin/categorias/" class="uk-button uk-button-text">
+                                    Categorias
+                                </a>
+                            </li>
+                            <li class="<%= page === 'articles' ? 'uk-active' : '' %>">
+                                <a href="/admin/artigos/" class="uk-button uk-button-text">
+                                    Artigos
+                                </a>
+                            </li>
+                        </ul>
+                    <% } %>
+                </div>
             </div>
-        </div>
+        <% } %>
     </div>
 </nav>

@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const connection = require("./database/connection");
 
 /** Controllers */
+const AuthController = require("./app/controllers/AuthController");
 const CategoriesController = require("./app/controllers/CategoriesController");
 const ArticlesController = require("./app/controllers/ArticlesController");
 const UsersController = require("./app/controllers/UsersController");
@@ -15,6 +17,14 @@ const User = require("./app/models/User");
 
 /** View engine */
 app.set("view engine", "ejs");
+
+/** Session */
+app.use(session({
+    secret: "l+/mcr4RgxP7MWrQ8rJN6qPViobXq9OiwEPxrTXRQz4=",
+    cookie: {
+        maxAge: 86400000  // 1 day
+    }
+}));
 
 /** Static files location */
 app.use(express.static("public"));
@@ -29,6 +39,11 @@ connection.authenticate()
     .catch((error) => console.log(error));
 
 /** Routes */
+app.use("/", AuthController);
+app.use("/", CategoriesController);
+app.use("/", ArticlesController);
+app.use("/", UsersController);
+
 // Home page
 app.get("/", (req, res) => {
     Article.findAll({
@@ -37,8 +52,7 @@ app.get("/", (req, res) => {
                 [ "id", "desc" ]
             ],
             limit: 5
-        })
-        .then((articles) => {
+        }).then((articles) => {
             Category.findAll({ raw: true }).then((categories) => {
                 res.render("index", {
                     role: "user",
@@ -151,9 +165,5 @@ app.get("/categorias/:slug", (req, res) => {
         res.redirect("/");
     });
 });
-
-app.use("/", CategoriesController);
-app.use("/", ArticlesController);
-app.use("/", UsersController);
 
 app.listen(3000, () => console.log("Servidor em execução."));

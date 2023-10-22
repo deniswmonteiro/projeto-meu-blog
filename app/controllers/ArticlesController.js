@@ -1,11 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const slugify = require("slugify");
+
+/** Middlewares */
+const adminAuth = require("../../middlewares/adminAuth");
+
+/** Models */
 const Article = require("../models/Article");
 const Category = require("../models/Category");
 
 /** Articles list */
-router.get("/admin/artigos", (req, res) => {
+router.get("/admin/artigos", adminAuth, (req, res) => {
     Article.findAll({
         raw: true,
         include: [{ 
@@ -24,7 +29,7 @@ router.get("/admin/artigos", (req, res) => {
 });
 
 /** Create a article */
-router.get("/admin/artigos/criar", (req, res) => {
+router.get("/admin/artigos/criar", adminAuth, (req, res) => {
     Category.findAll({ raw: true })
         .then((categories) => {
             res.render("admin/articles/create", {
@@ -36,7 +41,7 @@ router.get("/admin/artigos/criar", (req, res) => {
 });
 
 /** Store a article */
-router.post("/admin/artigos/salvar", (req, res) => {
+router.post("/admin/artigos/salvar", adminAuth, (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
     const category = req.body.category;
@@ -56,7 +61,7 @@ router.post("/admin/artigos/salvar", (req, res) => {
 });
 
 /** Edit a article */
-router.get("/admin/artigos/editar/:id", (req, res) => {
+router.get("/admin/artigos/editar/:id", adminAuth, (req, res) => {
     const id = req.params.id;
 
     if (id && !isNaN(id)) {
@@ -83,8 +88,8 @@ router.get("/admin/artigos/editar/:id", (req, res) => {
 });
 
 /** Update a article */
-router.post("/admin/artigos/atualizar", (req, res) => {
-    const id = req.body.articleId;
+router.post("/admin/artigos/atualizar", adminAuth, (req, res) => {
+    const id = req.body["article-id"];
     const title = req.body.title;
     const content = req.body.content;
     const category = req.body.category;
@@ -108,8 +113,8 @@ router.post("/admin/artigos/atualizar", (req, res) => {
 });
 
 /** Delete a article */
-router.post("/admin/artigos/excluir", (req, res) => {
-    const id = req.body.articleId;
+router.post("/admin/artigos/excluir", adminAuth, (req, res) => {
+    const id = req.body["article-id"];
 
     if (id && !isNaN(id)) {
         Article.destroy({
