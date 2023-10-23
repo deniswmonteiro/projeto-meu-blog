@@ -16,24 +16,31 @@
                     </a>
                 </div>
                 <div class="uk-navbar-right">
-                    <% if (role === "user") { %>
+                    <% if (!userLogged) { %>
                         <li class="dropdown-trigger">
                             <a href="#" class="uk-text-uppercase">
                                 Categorias
                             </a>
+
+                            <div uk-dropdown="pos: top-right">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <% categories.forEach((category) => { %>
+                                        <li class="<%= page === category.slug ? 'uk-active' : '' %>">
+                                            <a href="/categorias/<%= category.slug %>">
+                                                <%= category.title %>
+                                            </a>
+                                        </li>
+                                    <% }) %>
+                                </ul>
+                            </div>
                         </li>
-    
-                        <div uk-dropdown="pos: top-right">
-                            <ul class="uk-nav uk-dropdown-nav">
-                                <% categories.forEach((category) => { %>
-                                    <li class="<%= page === category.slug ? 'uk-active' : '' %>">
-                                        <a href="/categorias/<%= category.slug %>">
-                                            <%= category.title %>
-                                        </a>
-                                    </li>
-                                <% }) %>
-                            </ul>
-                        </div>
+                        <ul class="uk-navbar-nav">
+                            <li class="<%= page === 'login' ? 'uk-active' : '' %>">
+                                <a href="/login/" class="uk-button uk-button-text">
+                                    Login
+                                </a>
+                            </li>
+                        </ul>
                     <% } else { %>
                         <ul class="uk-navbar-nav">
                             <li class="<%= page === 'users' ? 'uk-active' : '' %>">
@@ -49,6 +56,11 @@
                             <li class="<%= page === 'articles' ? 'uk-active' : '' %>">
                                 <a href="/admin/artigos/" class="uk-button uk-button-text">
                                     Artigos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/logout/" class="uk-button uk-button-text">
+                                    Sair
                                 </a>
                             </li>
                         </ul>

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const slugify = require("slugify");
+const userLogged = require("../../helpers/userLogged");
 
 /** Middlewares */
 const adminAuth = require("../../middlewares/adminAuth");
@@ -10,10 +11,12 @@ const Category = require("../models/Category");
 
 /** Categories list */
 router.get("/admin/categorias", adminAuth, (req, res) => {
+    const logged = userLogged(req);
+
     Category.findAll({ raw: true })
         .then((categories) => {
             res.render("admin/categories/index", {
-                role: "admin",
+                userLogged: logged,
                 page: "categories",
                 categories
             });
@@ -22,8 +25,10 @@ router.get("/admin/categorias", adminAuth, (req, res) => {
 
 /** Create a category */
 router.get("/admin/categorias/criar", adminAuth, (req, res) => {
+    const logged = userLogged(req);
+
     res.render("admin/categories/create", {
-        role: "admin",
+        userLogged: logged,
         page: "categories"
     });
 });
@@ -44,6 +49,7 @@ router.post("/admin/categorias/salvar", adminAuth, (req, res) => {
 
 /** Edit a category */
 router.get("/admin/categorias/editar/:id", adminAuth, (req, res) => {
+    const logged = userLogged(req);
     const id = req.params.id;
 
     if (isNaN(id)) res.redirect("/admin/categorias");
@@ -51,7 +57,14 @@ router.get("/admin/categorias/editar/:id", adminAuth, (req, res) => {
     else {
         Category.findByPk(id)
             .then((category) => {
-                if (category) res.render("admin/categories/edit", { category });
+                if (category) {
+                    res.render("admin/categories/edit", {
+                        userLogged: logged,
+                        page: "categories",
+                        category
+                    });
+                }
+
                 else res.redirect("/admin/categorias");
             })
             .catch((error) => res.redirect("/admin/categorias"));

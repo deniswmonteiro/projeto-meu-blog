@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcryptjs = require("bcryptjs");
+const userLogged = require("../../helpers/userLogged");
 
 /** Middlewares */
 const adminAuth = require("../../middlewares/adminAuth");
@@ -10,10 +11,12 @@ const User = require("../models/User");
 
 /** Users list */
 router.get("/admin/usuarios", adminAuth, (req, res) => {
+    const logged = userLogged(req);
+
     User.findAll({ raw: true })
         .then((users) => {
             res.render("admin/users/index", {
-                role: "admin",
+                userLogged: logged,
                 page: "users",
                 users
             });
@@ -22,8 +25,10 @@ router.get("/admin/usuarios", adminAuth, (req, res) => {
 
 /** Create a user */
 router.get("/admin/usuarios/criar", adminAuth, (req, res) => {
+    const logged = userLogged(req);
+
     res.render("admin/users/create", {
-        role: "admin",
+        userLogged: logged,
         page: "users"
     });
 });
@@ -61,6 +66,7 @@ router.post("/admin/usuarios/salvar", adminAuth, (req, res) => {
 
 /** Edit a user */
 router.get("/admin/usuarios/editar/:id", adminAuth, (req, res) => {
+    const logged = userLogged(req);
     const id = req.params.id;
 
     if (isNaN(id)) res.redirect("/admin/usuarios");
@@ -72,7 +78,7 @@ router.get("/admin/usuarios/editar/:id", adminAuth, (req, res) => {
             }
         }).then((user) => {
             res.render("admin/users/edit", {
-                role: "admin",
+                userLogged: logged,
                 page: "users",
                 user
             });

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const slugify = require("slugify");
+const userLogged = require("../../helpers/userLogged");
 
 /** Middlewares */
 const adminAuth = require("../../middlewares/adminAuth");
@@ -11,6 +12,8 @@ const Category = require("../models/Category");
 
 /** Articles list */
 router.get("/admin/artigos", adminAuth, (req, res) => {
+    const logged = userLogged(req);
+
     Article.findAll({
         raw: true,
         include: [{ 
@@ -21,7 +24,7 @@ router.get("/admin/artigos", adminAuth, (req, res) => {
         ]
     }).then((articles) => {
         res.render("admin/articles/index", {
-            role: "admin",
+            userLogged: logged,
             page: "articles",
             articles
         })
@@ -30,10 +33,12 @@ router.get("/admin/artigos", adminAuth, (req, res) => {
 
 /** Create a article */
 router.get("/admin/artigos/criar", adminAuth, (req, res) => {
+    const logged = userLogged(req);
+
     Category.findAll({ raw: true })
         .then((categories) => {
             res.render("admin/articles/create", {
-                role: "admin",
+                userLogged: logged,
                 page: "articles",
                 categories
             })
@@ -62,6 +67,7 @@ router.post("/admin/artigos/salvar", adminAuth, (req, res) => {
 
 /** Edit a article */
 router.get("/admin/artigos/editar/:id", adminAuth, (req, res) => {
+    const logged = userLogged(req);
     const id = req.params.id;
 
     if (id && !isNaN(id)) {
@@ -75,7 +81,7 @@ router.get("/admin/artigos/editar/:id", adminAuth, (req, res) => {
         }).then((article) => {
             Category.findAll({ raw: true }).then((categories) => {
                 res.render("admin/articles/edit", {
-                    role: "admin",
+                    userLogged: logged,
                     page: "articles",
                     article,
                     categories

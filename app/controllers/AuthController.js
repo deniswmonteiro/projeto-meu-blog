@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 const bcryptjs = require("bcryptjs");
 
+/** Middlewares */
+const adminAuth = require("../../middlewares/adminAuth");
+
 /** Models */
 const User = require("../models/User");
 
 /** Login */
 router.get("/login", (req, res) => {
     res.render("login", {
-        role: "user",
         page: "login"
     });
 });
@@ -29,10 +31,11 @@ router.post("/login", (req, res) => {
                 if (passwordMatch) {
                     req.session.user = {
                         id: user.id,
+                        name: user.name,
                         email: user.email
                     }
 
-                    res.redirect("/admin/artigos");
+                    res.redirect("/");
                 }
 
                 else res.redirect("/login"); 
@@ -43,6 +46,12 @@ router.post("/login", (req, res) => {
     }
 
     else res.redirect("/login");
+});
+
+/** Logout */
+router.get("/admin/logout", adminAuth, (req, res) => {
+    req.session.user = undefined;
+    res.redirect("/");
 });
 
 module.exports = router

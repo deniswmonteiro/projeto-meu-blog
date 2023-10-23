@@ -3,6 +3,7 @@ const app = express();
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const connection = require("./database/connection");
+const userLogged = require("./helpers/userLogged");
 
 /** Controllers */
 const AuthController = require("./app/controllers/AuthController");
@@ -46,6 +47,8 @@ app.use("/", UsersController);
 
 // Home page
 app.get("/", (req, res) => {
+    const logged = userLogged(req);
+
     Article.findAll({
             raw: true,
             order: [
@@ -55,7 +58,7 @@ app.get("/", (req, res) => {
         }).then((articles) => {
             Category.findAll({ raw: true }).then((categories) => {
                 res.render("index", {
-                    role: "user",
+                    userLogged: logged,
                     page: "home",
                     articles,
                     categories
@@ -66,6 +69,7 @@ app.get("/", (req, res) => {
 
 /** Articles pagination */
 app.get("/artigos/:id", (req, res) => {
+    const logged = userLogged(req);
     const page = Number(req.params.id);
 
     if (page === 0) res.redirect("/");
@@ -99,7 +103,7 @@ app.get("/artigos/:id", (req, res) => {
             else {
                 Category.findAll({ raw: true }).then((categories) => {
                     res.render("page", {
-                        role: "user",
+                        userLogged: logged,
                         page: "article",
                         result,
                         categories
@@ -112,6 +116,7 @@ app.get("/artigos/:id", (req, res) => {
 
 // Article page
 app.get("/:slug", (req, res) => {
+    const logged = userLogged(req);
     const slug = req.params.slug;
 
     Article.findOne({
@@ -122,7 +127,7 @@ app.get("/:slug", (req, res) => {
         if (article) {
             Category.findAll({ raw: true }).then((categories) => {
                 res.render("article", {
-                    role: "user",
+                    userLogged: logged,
                     page: "article",
                     article,
                     categories
@@ -138,6 +143,7 @@ app.get("/:slug", (req, res) => {
 
 // Category page
 app.get("/categorias/:slug", (req, res) => {
+    const logged = userLogged(req);
     const slug = req.params.slug;
 
     Category.findOne({
@@ -151,7 +157,7 @@ app.get("/categorias/:slug", (req, res) => {
         if (category) {
             Category.findAll({ raw: true }).then((categories) => {
                 res.render("category", {
-                    role: "user",
+                    userLogged: logged,
                     page: slug,
                     articles: category["articles"],
                     categories,
